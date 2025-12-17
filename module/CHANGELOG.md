@@ -1,5 +1,11 @@
 # Change log
 
+## [2.6.2] - 2025-12-18
+### Fixed
+- OC 2.x compatibility.
+### Internal
+- Minor code improvements.
+
 ## [2.6.1] - 2025-04-07
 ### Fixed
 - Store settings page header.
