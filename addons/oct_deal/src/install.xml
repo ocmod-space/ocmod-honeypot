@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+### docblock.txt ###
+-->
+
+<modification>
+    <name>VAR(FULL_NAME)</name>
+    <code>VAR(CODE)</code>
+    <version>VAR(VERSION)</version>
+    <author>VAR(AUTHOR)</author>
+    <link>VAR(XMLLINK)</link>
+
+    <file path="catalog/view/theme/oct_deals/template/checkout/oct_smartcheckout/smartcheckout.twig" error="log">
+        <operation error="log">
+            <search>
+                <![CDATA[</main>]]>
+            </search>
+            <add position="before" offset="3"><![CDATA[
+                    {{ captcha}}]]></add>
+        </operation>
+    </file>
+
+    <file path="catalog/controller/checkout/oct_smartcheckout.php" error="log">
+        <operation error="log">
+            <search>
+                <![CDATA[checkout/oct_smartcheckout/smartcheckout]]>
+            </search>
+            <add position="before"><![CDATA[
+		// Captcha
+		if ($this->config->get('captcha_' . $this->config->get('config_captcha') . '_status') && in_array('guest', (array)$this->config->get('config_captcha_page'))) {
+			$data['captcha'] = $this->load->controller('extension/captcha/' . $this->config->get('config_captcha'));
+		} else {
+			$data['captcha'] = '';
+		}]]></add>
+        </operation>
+
+        <operation error="log">
+            <search>
+                <![CDATA[$this->session->data['account'] = 'guest';]]>
+            </search>
+            <add position="before" offset="1"><![CDATA[
+		// Captcha
+		if ($this->config->get('captcha_' . $this->config->get('config_captcha') . '_status') && in_array('guest', (array)$this->config->get('config_captcha_page'))) {
+			$captcha = $this->load->controller('extension/captcha/' . $this->config->get('config_captcha') . '/validate');
+
+			if ($captcha) {
+				$json['error']['captcha'] = $captcha;
+			}
+		}]]></add>
+        </operation>
+    </file>
+
+</modification>
