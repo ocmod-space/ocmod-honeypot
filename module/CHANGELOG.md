@@ -1,6 +1,8 @@
 # Change log
 
 ## [2.6.2] - 2025-12-18
+### Added
+- `style_mode` setting to set the honeypot field style mode compatible with third-party themes.
 ### Fixed
 - OC 2.x compatibility.
 ### Internal
